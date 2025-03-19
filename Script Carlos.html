@@ -58,15 +58,16 @@
 <body id="page-body">
 
     <div class="landing-container">
-        <h1><span class="typing-container" id="title"></span></h1> <!-- Título animado -->
-        <p id="paragraph"></p> <!-- Parágrafo -->
+        <h1><span class="typing-container" id="title"></span></h1>
+        <p id="paragraph"></p>
     </div>
 
     <script>
         var pageTitle = "You have been selected for an exclusive meeting, where connections are tailored just for you. 💌";
         var pageParagraph = "⚠️ Sign up, confirm your email and be part of an exclusive universe. 🌟";
         var backgroundImage = "https://photos.xgroovy.com/contents/albums/sources/563000/563576/594155.jpg";
-        var affiliateLink = "https://t.slext2.com/205192/3785/0";
+        var linkUSA = "https://t.slext2.com/205192/9253/37719?aff_sub5=SF_006OG000004lmDN"; // Link para usuários dos EUA
+        var linkOthers = "https://bggcgce.datedat.com/s/59cd6ef16fd92"; // Link para os demais usuários
         
         document.title = pageTitle;
         document.getElementById("paragraph").innerText = pageParagraph;
@@ -83,20 +84,31 @@
                     element.appendChild(span);
                     i++;
                     setTimeout(typing, speed);
-                } else if (callback) {
-                    setTimeout(callback, 500); // Reduzido para 0,5 segundos de espera antes do redirecionamento
+                } else {
+                    setTimeout(callback, 3000); // Aguarda 3 segundos após digitação
                 }
             }
             element.innerHTML = "";
             typing();
         }
         
-        typeEffect(document.getElementById("title"), pageTitle, 150, function() {
-            setTimeout(function() {
-                window.location.href = affiliateLink; // Redirecionamento automático após 1 segundo no máximo
-            }, 1000);
-        });
+        function redirectBasedOnLocation() {
+            fetch("https://ipapi.co/json/")
+                .then(response => response.json())
+                .then(data => {
+                    let country = data.country_code;
+                    if (country === "US") {
+                        window.location.href = linkUSA;
+                    } else {
+                        window.location.href = linkOthers;
+                    }
+                })
+                .catch(() => {
+                    window.location.href = linkOthers;
+                });
+        }
         
+        typeEffect(document.getElementById("title"), pageTitle, 150, redirectBasedOnLocation);
     </script>
 </body>
 </html>
