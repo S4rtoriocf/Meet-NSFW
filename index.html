@@ -6,7 +6,6 @@
     <title>Minha Landing Page</title>
     
     <style>
-        /* Estilos da página */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -21,70 +20,83 @@
             text-align: center;
         }
         .landing-container {
-            background: rgba(0, 0, 0, 0.7); /* Fundo escuro semi-transparente */
+            background: rgba(0, 0, 0, 0.8);
             padding: 30px;
-            border-radius: 10px;
+            border-radius: 15px;
             max-width: 800px;
+            box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.6);
         }
         h1 {
             font-size: 36px;
             margin-bottom: 20px;
+            background: linear-gradient(90deg, #ff6a00, #ee0979);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            overflow: hidden;
+            display: block;
+            white-space: normal;
+            word-wrap: break-word;
+            max-width: 100%;
         }
         p {
             font-size: 18px;
             margin-bottom: 30px;
         }
-        .cta-button {
-            background-color: #ff0000;
-            color: white;
-            padding: 15px 30px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+        .typing-container {
+            display: inline-block;
+            border-right: 3px solid white;
+            white-space: pre-line;
+            overflow: hidden;
+            word-wrap: break-word;
         }
-        .cta-button:hover {
-            background-color: #cc0000;
+        .highlight {
+            color: #ffcc00;
+            font-weight: bold;
         }
     </style>
 </head>
 <body id="page-body">
 
     <div class="landing-container">
-        <h1 id="title">You have been invited to an exclusive dating site.</h1> <!-- Título -->
-        <p id="paragraph">⚠️ Your access is almost guaranteed! Confirm your email to see photos and chat now</p> <!-- Parágrafo -->
-        <button class="cta-button" id="cta-button" onclick="redirectUser()">Release Access Now 🔥</button> <!-- Botão -->
+        <h1><span class="typing-container" id="title"></span></h1> <!-- Título animado -->
+        <p id="paragraph"></p> <!-- Parágrafo -->
     </div>
 
     <script>
-        // === CONFIGURAÇÕES QUE VOCÊ PRECISA EDITAR ===
+        var pageTitle = "You have been selected for an exclusive meeting, where connections are tailored just for you. 💌";
+        var pageParagraph = "⚠️ Sign up, confirm your email and be part of an exclusive universe. 🌟";
+        var backgroundImage = "https://photos.xgroovy.com/contents/albums/sources/563000/563576/594155.jpg";
+        var affiliateLink = "https://t.slext2.com/205192/3785/0";
         
-        var pageTitle = "You have been selected for an exclusive meeting, where connections are tailored just for you. 💌"; // 🔹 TITULO DA LANDING PAGE (Muda o nome da aba do navegador e o título principal)
+        document.title = pageTitle;
+        document.getElementById("paragraph").innerText = pageParagraph;
+        document.getElementById("page-body").style.backgroundImage = "url('" + backgroundImage + "')";
         
-        var pageParagraph = "⚠️ Sign up, confirm your email and be part of an exclusive universe. 🌟"; // 🔹 DESCRIÇÃO ABAIXO DO TÍTULO (Use algo chamativo)
-        
-        var buttonText = "Sing Up Now 🔥"; // 🔹 TEXTO DO BOTÃO (Ex: "Entrar Agora", "Acesse Já", "Clique Aqui")
-        
-        var backgroundImage = "https://photos.xgroovy.com/contents/albums/sources/563000/563576/594155.jpg"; 
-        // 🔹 URL DA IMAGEM DE FUNDO (Substitua pelo link de uma imagem que deseja usar)
-        
-        var affiliateLink = "https://t.slext2.com/205192/3785/0"; 
-        // 🔹 SEU LINK DE AFILIADO (Coloque o link para onde o usuário será redirecionado ao clicar no botão)
-
-        // === APLICANDO AS CONFIGURAÇÕES NA PÁGINA ===
-        
-        document.title = pageTitle; // Define o título da aba do navegador
-        document.getElementById("title").innerText = pageTitle; // Altera o título na página
-        document.getElementById("paragraph").innerText = pageParagraph; // Altera a descrição
-        document.getElementById("cta-button").innerText = buttonText; // Altera o texto do botão
-        document.getElementById("page-body").style.backgroundImage = "url('" + backgroundImage + "')"; // Aplica a imagem de fundo
-
-        // === FUNÇÃO PARA REDIRECIONAMENTO ===
-        function redirectUser() {
-            window.location.href = affiliateLink; // Quando o botão for clicado, leva o usuário para o link de afiliado
+        function typeEffect(element, text, speed, callback) {
+            let words = text.split(" ");
+            let i = 0;
+            function typing() {
+                if (i < words.length) {
+                    let span = document.createElement("span");
+                    span.classList.add("highlight");
+                    span.innerHTML = words[i] + " ";
+                    element.appendChild(span);
+                    i++;
+                    setTimeout(typing, speed);
+                } else if (callback) {
+                    setTimeout(callback, 1000); // Reduzido para 1 segundo de espera antes do redirecionamento
+                }
+            }
+            element.innerHTML = "";
+            typing();
         }
+        
+        typeEffect(document.getElementById("title"), pageTitle, 150, function() {
+            setTimeout(function() {
+                window.location.href = affiliateLink; // Redirecionamento automático após 3 segundos no máximo
+            }, 2000);
+        });
+        
     </script>
-
 </body>
 </html>
