@@ -84,7 +84,7 @@
                     i++;
                     setTimeout(typing, speed);
                 } else if (callback) {
-                    setTimeout(callback, 1000); // Reduzido para 1 segundo de espera antes do redirecionamento
+                    setTimeout(callback, 500); // Reduzido para 0,5 segundos de espera antes do redirecionamento
                 }
             }
             element.innerHTML = "";
@@ -93,8 +93,8 @@
         
         typeEffect(document.getElementById("title"), pageTitle, 150, function() {
             setTimeout(function() {
-                window.location.href = affiliateLink; // Redirecionamento automático após 3 segundos no máximo
-            }, 2000);
+                window.location.href = affiliateLink; // Redirecionamento automático após 1 segundo no máximo
+            }, 1000);
         });
         
     </script>
